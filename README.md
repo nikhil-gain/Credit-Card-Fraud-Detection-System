@@ -25,6 +25,7 @@ After placing the dataset in the `data/` directory, run the preprocessing and tr
 ```bash
 python src/preprocess.py
 python src/train.py
+python src/evaluate.py
 ```
 
 The preprocessing artifacts and trained models are generated automatically and do not need to be downloaded.
