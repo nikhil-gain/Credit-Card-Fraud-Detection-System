@@ -4,6 +4,3 @@ __pycache__/
 .env
 venv/
 data/
-*.pkl
-models/*.pkl
-*.pkl
