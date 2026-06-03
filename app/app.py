@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import List
 
 model = joblib.load("../models/fraud_model.pkl")
+scaler = joblib.load("../data/scaler.pkl")
 
 app = FastAPI()
 
@@ -21,7 +22,9 @@ def home():
 @app.post('/predict')
 def predict(transaction: Transaction):
     data = np.array(transaction.features).reshape(1, -1)
-
+    
+    # It scales raw Amount from dashboard input
+    data[0, 1]= scaler.transform([[data[0, -1]]])[0][0]
     # Get prediction and fraud probability
     prediction = model.predict(data)[0]
     probability = model.predict_proba(data)[0][1]
