@@ -33,7 +33,7 @@ features.append(scaled_amount)
 if st.button("Check Transaction"):
     # Send request to FastAPI
     response = requests.post(
-        "http://localhost:8000/predict",
+        "https://fraud-detection-api-7g34.onrender.com",
         json={"features": features}
     )
 
