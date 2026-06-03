@@ -5,13 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import shap
-
+import os
 
 st.set_page_config(page_title="Fraud Detection", layout="wide")
 st.title("Real-Time Credit Card Fraud Detection")
 
-scaler = joblib.load('../data/scaler.pkl')
-explainer, x_test = joblib.load('../data/shap_data.pkl')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+scaler = joblib.load(os.path.join(BASE_DIR, '../data/scaler.pkl'))
+explainer, x_test = joblib.load(os.path.join(BASE_DIR, '../data/shap_data.pkl'))
 
 # sidebar Transaction Input
 st.sidebar.header("Enter Transaction Details")

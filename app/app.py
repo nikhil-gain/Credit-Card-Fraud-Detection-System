@@ -3,9 +3,12 @@ import joblib
 import numpy as np 
 from pydantic import BaseModel
 from typing import List
+import os
 
-model = joblib.load("../models/fraud_model.pkl")
-scaler = joblib.load("../data/scaler.pkl")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+model = joblib.load(os.path.join(BASE_DIR, "../models/fraud_model.pkl"))
+scaler = joblib.load(os.path.join(BASE_DIR, "../data/scaler.pkl"))
 
 app = FastAPI()
 

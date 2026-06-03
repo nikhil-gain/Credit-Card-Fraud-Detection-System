@@ -3,4 +3,5 @@ __pycache__/
 *.pyc
 .env
 venv/
-data/
+data/creditcard.csv
+data/preprocessed_splits.pkl
