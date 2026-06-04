@@ -29,51 +29,52 @@ scaled_amount = scaler.transform([[amount]])[0][0]
 features.append(scaled_amount)
 
 
-try:
-    if st.button("Check Transaction"):
-        # Send request to FastAPI
-        response = requests.post(
-            "https://fraud-detection-api-7g34.onrender.com",
-            json={"features": features},
-            timeout= 60    
-        )
+if st.button("Check Transaction"):
+    with st.spinner("Contacting API... please wait (may take 30s on first request)"):
+        try:
+            # Send request to FastAPI
+            response = requests.post(
+                "https://fraud-detection-api-7g34.onrender.com",
+                json={"features": features},
+                timeout= 60    
+            )
 
-        if response.status_code == 200:
-            result = response.json()
-            fraud = result["fraud"]
-            prob = result["probability"]
+            if response.status_code == 200:
+                result = response.json()
+                fraud = result["fraud"]
+                prob = result["probability"]
 
-            st.markdown("---------------")
-            col1, col2 = st.columns(2)
+                st.markdown("---------------")
+                col1, col2 = st.columns(2)
 
-            with col1:
-                if fraud:
-                    st.error(f"ALERT!!!! - FRAUD DETECTED")
-                else:
-                    st.success(f"LEGITIMATE TRANSACTION")
+                with col1:
+                    if fraud:
+                        st.error(f"ALERT!!!! - FRAUD DETECTED")
+                    else:
+                        st.success(f"LEGITIMATE TRANSACTION")
 
-            with col2:
-                st.metric("Fraud Probabitlity: ", f"{prob*100:.2f}%")
+                with col2:
+                    st.metric("Fraud Probabitlity: ", f"{prob*100:.2f}%")
 
-            # Gauge Bar
-            st.markdown("**Risk Level**")
-            st.progress(prob)
+                # Gauge Bar
+                st.markdown("**Risk Level**")
+                st.progress(prob)
 
-            # SHAP Explanation
-            st.markdown("-----------")
-            st.subheader("Why did the model decide this?")
+                # SHAP Explanation
+                st.markdown("-----------")
+                st.subheader("Why did the model decide this?")
 
-            input_df = pd.DataFrame([features], columns=x_test.columns)
-            shap_vals = explainer.shap_values(input_df)
+                input_df = pd.DataFrame([features], columns=x_test.columns)
+                shap_vals = explainer.shap_values(input_df)
 
-            fig, ax = plt.subplots(figsize=(10,5))
-            shap.summary_plot(shap_vals, input_df, plot_type = "bar", show = False)
-            st.pyplot(fig)
+                fig, ax = plt.subplots(figsize=(10,5))
+                shap.summary_plot(shap_vals, input_df, plot_type = "bar", show = False)
+                st.pyplot(fig)
 
-        # else:
-        #     st.error("API not reachable. Make sure FastAPI is running.")
+            # else:
+            #     st.error("API not reachable. Make sure FastAPI is running.")
 
-except requests.exceptions.Timeout:
-    st.error("API is waking up, please click the button again in 30 seconds. ")
-except requests.exceptions.ConnectionError:
-    st.error("API is not reachable. Make sure FastAPI is running.")
+        except requests.exceptions.Timeout:
+            st.error("API is waking up, please click the button again in 30 seconds. ")
+        except requests.exceptions.ConnectionError:
+            st.error("API is not reachable. Make sure FastAPI is running.")
