@@ -22,7 +22,7 @@ amount = st.sidebar.number_input("Transaction Amount ", min_value=0.0, value=100
 st.sidebar.markdown("**Feature Values (V1-V28)**")
 features = []
 for i in range(1,29):
-    val = st.sidebar.number_input(f"V{i}", min_value=-20.0, max_value=20.0, value=0.0, step=0.000001, format="%.5f")
+    val = st.sidebar.slider(f"V{i}", min_value=-20.0, max_value=20.0, value=0.0, step=0.000001, format="%.5f")
     features.append(val)
 
 scaled_amount = scaler.transform([[amount]])[0][0]
