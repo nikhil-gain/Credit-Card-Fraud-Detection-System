@@ -59,7 +59,7 @@ cd app
 streamlit run dashboard.py
 ```
 
-### Test API directly
+### Test API directly in VS Code in windows
 ```bash
 curl.exe -X POST "http://localhost:8000/predict" `
 -H "Content-Type: application/json" `
@@ -78,6 +78,7 @@ Expected response for fraud case:
 ```
 
 ## Project Structure
+```bash
 fraud-detection/
 ├── data/
 │   └── creditcard.csv        # download from Kaggle
@@ -97,7 +98,7 @@ fraud-detection/
 │   └── dashboard.py          # Streamlit frontend
 ├── requirements.txt
 └── README.md
-
+```
 
 ### Hope, you enjoyed the project. 
 
