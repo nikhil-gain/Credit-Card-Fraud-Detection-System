@@ -34,7 +34,7 @@ if st.button("Check Transaction"):
         try:
             # Send request to FastAPI
             response = requests.post(
-                "https://fraud-detection-api-7g34.onrender.com",
+                "https://fraud-detection-api-7g34.onrender.com/predict",
                 json={"features": features},
                 timeout= 60    
             )
